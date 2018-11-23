@@ -1,22 +1,51 @@
-<ul>
-  {{#each burgers}}
-    {{#unless devoured}}
-      {{> burgers/burger-block }}
-    {{/unless}}
-  {{/each}}
-</ul>
+{{!-- Top row displays burger --}}
+<div class="row">
 
-<ul>
-  {{#each burgers}}
-    {{#if devoured}}
-      {{> burgers/burger-block }}
-    {{/if}}
-  {{/each}}
-</ul>
-
-<form class="create-form">
-  <div class="form-group">
-    <label for="ca">Burger</label>
+  <div class="col">
+    <img src="/assets/img/fastfood-series-1321503-638x540.jpg" class="img-rounded" alt="Big Burger" height="250">
   </div>
-  <button type="submit">Add Burger</button>
-</form>
+</div>
+
+{{!-- App Title --}}
+<h1>Eat-Da-Burger!</h1>
+
+{{!-- Row to display burgers --}}
+<div class="row">
+
+  {{!-- Column for uneaten burgers --}}
+  <div class="col-5">
+    <ul>
+      {{#each burgers}}
+        {{#unless devoured}}
+          {{> burgers/burger-block devoured=true}}
+        {{/unless}}
+      {{/each}}
+    </ul>
+  </div>
+
+  {{!-- Spacer column  --}}
+  <div class="col-2"></div>
+
+  {{!-- Column for burgers that have been devoured --}}
+  <div class="col-5">
+    <ul>
+      {{#each burgers}}
+        {{#if devoured}}
+          {{> burgers/burger-block devoured=false}}
+        {{/if}}
+      {{/each}}
+    </ul>
+  </div>
+</div>
+
+{{!-- Row for form to enter new burgers --}}
+<div class="row justify-content-center">
+  <div class="col-3">
+    <form class="create-form">
+      <div class="form-group">
+        <textarea class="form-control" id="bg" name="burger_name" rows="3"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Burger</button>
+    </form>
+  </div>
+</div>

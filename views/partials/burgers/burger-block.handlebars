@@ -1,8 +1,24 @@
-<li>
-  {{burger-name}}
+{{!-- Handlebars for burger row --}}
 
-  <button class="change-devoured" 
-    data-id="{{id}}" 
-    data-newdevoured="{{devoured}}">
-  </button>
-</li>
+{{!-- Display uneaten burgers --}}
+{{#if devoured}}
+
+  <div class="form-row">
+    <div class="col-7">
+      <input class="form-control form-control-lg" type="text" placeholder='{{id}}.  {{burger_name}}'>
+    </div>
+   <div class="col">
+      <button type="button" class="btn btn-info change-devoured" data-id="{{id}}" data-newdevoured="{{devoured}}">Devoured
+      </button>
+    </div>
+  </div>
+
+{{!-- Display already eaten burgers --}}
+{{else}}
+
+  <div class="form-row">
+    <div class="col-7">
+      <input class="form-control" type="text" placeholder='{{id}}.  {{burger_name}}' readonly>
+    </div>
+  </div>
+{{/if}}

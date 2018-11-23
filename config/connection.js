@@ -27,5 +27,14 @@ db.config.typeCast = (field, next) => {
   return next();
 };
 
+// Make connection
+db.connect(function(err) {
+  if (err) {
+    console.log("error connecting: " + err.stack);
+    return;
+  }
+  console.log("connected as id " + db.threadId);
+});
+
 // Export the connection so it's available in other parts of the app
 module.exports = db;

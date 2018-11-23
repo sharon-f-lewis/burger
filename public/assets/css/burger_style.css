@@ -1,0 +1,19 @@
+body {
+  background-color: #ffffcc;
+  margin-top: 5px;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #ff0000;
+}
+
+img {
+  margin-left: 40%;
+}
+
+.form-group, .form-row {
+  margin-bottom: 5px;
+}

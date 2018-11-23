@@ -1,46 +1,50 @@
 // Import Dependencies
 const express = require("express");
-const router = express.router;
+const router = express.Router();
 
 // Import the model (burger.js) to use its databse functions
-const burger = require("../models/burger");
+const burger = require("../models/burger.js");
 
 // Create all our routes and setup logic within those routes where required
 
 // Display all burgers
-router.get("/", (req, res) => {
-  burger.all = (data) => {
+router.get("/", function(req, res) {
+
+  burger.selectAll(function(data) {
+
     const hbsObject = {
       burgers: data
     };
-    console.log(hbsObject);
-    res.render("index", hbsObject);
-  };
-});
 
-// Add new burger
-router.post("/api/burgers", (req, res) => {
-  burger.create([
-    "burger_name", "devoured"
-  ], [
-    req.body.burger_name, req.body.devoured
-  ], (result) => {
-    // Send back the ID of the new burger
-    res.json({ id: SpeechRecognitionResult.insertId });
+    res.render("index", hbsObject);
   });
 });
 
-router.put("/api/burgers/:id", (req,res) => {
-  const condition = `id = ${req.params.id}`;
-  console.log("condition", condition);
+// Add new burger
+router.post("/api/burgers", function(req, res) {
 
-  burger.update({
+  burger.insertOne([
+    "burger_name"
+  ], [
+    req.body.burger_name
+  ], function(result) {
+    // Send back the ID of the new burger
+    res.json({ id: result.insertId });
+  });
+});
+
+router.put("/api/burgers/:id", function(req,res) {
+
+  const condition = "id = " + req.params.id;
+
+  burger.updateOne({
     devoured: req.body.devoured
-  }, condition, (result) => {
+  }, condition, function(result) {
     if (result.changedRows == 0) {
       // If no rews changed, then the ID must not exist, so 404
       return res.status(404).end();
-    } else {
+    } 
+    else {
       res.status(200).end();
     }
   });

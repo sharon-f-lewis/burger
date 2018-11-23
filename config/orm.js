@@ -1,5 +1,5 @@
 // Import MYSQL connection
-const db = require("../config/connection");
+const db = require("../config/connection.js");
 
 // Helper functions for SQL syntax.
 
@@ -20,6 +20,7 @@ function objToSQL(ob) {
 
   // loop through the keys and push the key/value as string int arr
   for (let key in ob) {
+
     let value = ob[key];
 
     // check to skip hidden properties
@@ -27,33 +28,35 @@ function objToSQL(ob) {
 
       // if string with spaces, add quotations
       if (typeof value === "string" && value.indexOf(" ") >= 0) {
-        value = `"${value}"`;
-      };
+        value = "'" + value + "'";
+      }
 
       // add value to array
-      arr.push(`${key} = ${value}`);
-    };
-  };
+      arr.push(key + "=" + value);
+    }
+  }
 
   // translate array of string to a single comma-separated string
   return arr.toString();
-};
+}
 
 
 // Object for all our SQL statement functions
 const orm = {
 
   // function to select all burgers in database
-  selectAll: function (table, cols, cb) {
+  selectAll: function (tableInput, cb) {
 
     // define query string
-    const queryString = `SELECT ${cols.toString()} FROM ${table};`;
-    console.log(queryString);
+    const queryString = "SELECT * FROM " + tableInput + ";";
 
     // perform query
-    db.query(queryString, function (err, result) {
+    const dbquery = db.query(queryString, function (err, result) {
+
       // if database err, report error
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       // otherwise, send result in callback
       cb(result);
     });
@@ -63,28 +66,46 @@ const orm = {
   insertOne: function (table, cols, vals, cb) {
 
     // define query string
-    const queryString = `INSERT INTO ${table} (${cols.toString()})
-      VALUES (${printQuestionMraks(vals.length)})`;
-    console.log(queryString);
+    let queryString = "INSERT INTO " + table;
+    queryString += " (";
+    queryString += cols.toString();
+    queryString += ") ";
+    queryString += "VALUES (";
+    queryString += printQuestionMarks(vals.length);
+    queryString += ")";
 
     // perform query
-    db.query(queryString, vals, function (err, result) {
+    const dbquery = db.query(queryString, vals, function (err, result) {
+
       // if database err, report error
-      if (err) throw err;
+      if (err) {
+        throw err
+      }
+
       // otherwise, send result in callback
       cb(result);
     });
   },
 
   // function to update one burger
+  // An example of objColBals would be {name: cheeseburger, devoured: false}
   updateOne: function (table, objColVals, condition, cb) {
-    const queryString = `UPDATE SET ${objToSQL(objColVals)}
-      WHERE ${condition}`;
-    console.log(queryString);
 
-    db.query(queryString, function (err, result) {
+    // define query string
+    let queryString = "UPDATE " + table;
+    queryString += " SET ";
+    queryString += objToSQL(objColVals);
+    queryString += " WHERE ";
+    queryString += condition;
+
+    // perform query
+    const dbquery = db.query(queryString, function (err, result) {
+
       // if database err, report error
-      if (err) throw err;
+      if (err) {
+        throw err
+      };
+
       // otherwise, send result in callback
       cb(result);
     });

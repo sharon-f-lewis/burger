@@ -1,26 +1,31 @@
 // Importy the ORM to create functions that will interact with the database
-const orm = require("../config/orm");
+const orm = require("../config/orm.js");
 
 // The variables cols and vals are arrays
 const burger = {
 
   // All function will list all records from burgers table
-  all: function(cols, cb) {
-    orm.all('burgers', cols, function(res) {
+  selectAll: function(cb) {
+
+    orm.selectAll("burgers", function(res) {
       cb(res);
     });
   },
 
   // Create function will add new record to burgers table
-  create: function(cols, vals, cb) {
-    orm.create('burgers', cols, vals, function(res) {
+  insertOne: function(cols, vals, cb) {
+
+    orm.insertOne("burgers", cols, vals, function(res) {
+
       cb(res);
     });
   },
 
   // Update function will change an existing burger in the burgers table
-  update: function(objColVals, condition, cb) {
-    orm.update('burgers', objColVals, condition, function(res) {
+  updateOne: function(objColVals, condition, cb) {
+
+    orm.updateOne("burgers", objColVals, condition, function(res) {
+      
       cb(res);
     });
   }
