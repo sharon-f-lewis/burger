@@ -23,6 +23,6 @@ Users are able to input the name sof burgers they would like to eat, list the bu
 
 * Heroku - the cloud platform to deploy the application.
 
-See a screenshop below for a glimpse of the final product, or click here to view and use the live app.
+See a screenshop below for a glimpse of the final product, or click [here](https://desolate-ravine-10850.herokuapp.com/) to view and use the live app.
 
-![Screenshot](caputre.png)
+![Screenshot](Capture.png)
